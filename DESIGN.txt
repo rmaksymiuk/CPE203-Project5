@@ -1,0 +1,57 @@
+Functions that were left in the Functions.java file:
+	+getNumFromRange: int                     <<static>>
+	+parseBackground(): boolean                  <<static>>
+	+parseSapling(): boolean                       <<static>>
+	+parseDude(): boolean                    <<static>>
+	+parseFairy(): boolean                         <<static>>
+	+parseTree(): boolean                       <<static>>
+	+parseObstacle(): boolean                        <<static>>
+	+parseHouse(): boolean                        <<static>>
+	+clamp()                                      <<static>>
+	+createAnimationAction(): Action             <<static>>
+	+createActivityAction(): Action              <<static>>
+	+createHouse(): Entity                  <<static>>
+	+createObstacle(): Entity                   <<static>>
+	+createTree(): Entity                <<static>>
+	+createStump(): Entity                    <<static>>
+	+createSapling(): Entity                         <<static>>
+	+createFairy(): Entity                     <<static>>
+	+createDudeNotFull(): Entity                       <<static>>
+	+createDudeFull(): Entity                        <<static>>
+	+getNumFromRange() int				<<static>>
+		not necessary to move to any of the classes, it was decided to keep in the Functions.java. Clamp() and getNumFromRange() didn't have to do anything with any classes, so it was left
+		in the Functions.java file as a regular function.
+
+Functions that could be moved to other classes:
+	executeActivityAction()
+		1) I selected Action.java
+		2) Because it had an Action object as a parameter, as well as action.entity was used a lot in the body of the function.
+	executeAction()
+		1) I selected Action.java
+		2) Action object was passed in as a parameter as well as the object was heavily used in the function.
+	createAnimationAction()
+		1) Entity.java
+		2) Entity object was passed in as a parameter, as well as used the same amount of time as others. 
+	createActivityAction()
+		1) Entity.java
+		2) Entity object was passed in as a parameter, as well as used the same amount of time as others.
+	scheduleActions()
+		1) Entity.java
+		2) Entity object was used the most in this function, that's the reason I didn't put it in any other class.
+	executeDudeFullActivity()
+	executeSaplingActivity()
+	executeTreeActivity()
+	executeFairyActivity()
+	executeDudeNotFullActivity()
+		1) Entity.java
+		2) The entity object was passed in as a parameter as well as it was frequently used with the functions that are already inside this class.
+	nextPositionFairy()
+		1)Point.java
+		2)Point object was frequently used as well as it was passed in as a parameter.
+	nextPositionDude()
+		1)Point.java
+		2)Point object was frequently used as well as it was passed in as a parameter.
+
+	
+	
+		
