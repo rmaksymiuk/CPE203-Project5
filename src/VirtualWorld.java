@@ -98,11 +98,13 @@ public final class VirtualWorld extends PApplet
         }
 
         //Adding entity monster
-
+        Animator monster = new Monster("monster", pressed,this.imageStore.getImageList("monster"), 500,51);
+        this.world.addEntity(monster);
+        monster.scheduleActions(this.scheduler, this.world,this.imageStore);
         //Adding entity knight
-        Animator entity = new Knight("knight", pressed,this.imageStore.getImageList("knight"), 500,51);
-        this.world.addEntity(entity);
-        entity.scheduleActions(this.scheduler, this.world,this.imageStore);
+        Animator knight = new Knight("knight", pressed,this.imageStore.getImageList("knight"), 500,51);
+        this.world.addEntity(knight);
+        knight.scheduleActions(this.scheduler, this.world,this.imageStore);
 
     }
 

@@ -45,7 +45,7 @@ public class DudeFull extends MoverEntity{
             Entity target,
             EventScheduler scheduler)
     {
-        PathingStrategy strategy = new SingleStepPathingStrategy();
+        PathingStrategy strategy = new AStarPathingStrategy();
         if (this.getPosition().adjacent(target.getPosition())) {
             return true;
         }
@@ -54,9 +54,7 @@ public class DudeFull extends MoverEntity{
 
             if (!this.getPosition().equals(nextPos)) {
                 Optional<Entity> occupant = world.getOccupant(nextPos);
-                if (occupant.isPresent()) {
-                    scheduler.unscheduleAllEvents(occupant.get());
-                }
+                occupant.ifPresent(scheduler::unscheduleAllEvents);
 
                 world.moveEntity(this, nextPos);
             }

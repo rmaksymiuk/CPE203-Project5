@@ -53,7 +53,7 @@ public class DudeNotFull extends MoverEntity{
             Entity target,
             EventScheduler scheduler)
     {
-        PathingStrategy strategy = new SingleStepPathingStrategy();
+        PathingStrategy strategy = new AStarPathingStrategy();
         if (this.getPosition().adjacent(target.getPosition())) {
             //increase the resourseCount by 1
             this.setIncreaseResourceCount(1);

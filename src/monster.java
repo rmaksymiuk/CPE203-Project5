@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Knight extends MoverEntity{
+public class Monster extends MoverEntity{
 
-    public Knight(
+    public Monster(
             String id,
             Point position,
             List<PImage> images,
@@ -20,16 +20,12 @@ public class Knight extends MoverEntity{
             WorldModel world,
             ImageStore imageStore,
             EventScheduler scheduler) {
-        House houseType = new House(null, null ,null);
-        Optional<Entity> fullTarget = this.getPosition().findNearest(world, new ArrayList<>(List.of(houseType)));
+        Fairy fairyType = new Fairy(null, null ,null,0,0);
+        Optional<Entity> fullTarget = this.getPosition().findNearest(world, new ArrayList<>(List.of(fairyType)));
 
-        if (fullTarget.isPresent() && this.moveToEntity(world, fullTarget.get(),scheduler)) {
-            world.removeEntity(this);
-        } else {
-            scheduler.scheduleEvent(this,
-                    this.createActivityAction(world, imageStore),
-                    this.getActionPeriod());
-        }
+        scheduler.scheduleEvent(this,
+                this.createActivityAction(world, imageStore),
+                this.getActionPeriod());
     }
 
 
@@ -40,6 +36,9 @@ public class Knight extends MoverEntity{
     {
         PathingStrategy strategy = new AStarPathingStrategy();
         if (this.getPosition().adjacent(target.getPosition())) {
+            world.removeEntity(target);
+            //Stump stump = Functions.createStump("stump",target.getPosition(), )
+            //world.addEntity(new Stump("stump", target.getPosition(), ));
             return true;
         }
         else {
@@ -54,5 +53,4 @@ public class Knight extends MoverEntity{
             return false;
         }
     }
-
 }

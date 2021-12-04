@@ -48,26 +48,14 @@ public class Fairy extends MoverEntity{
     Point newPos = null;
     List<Point> points = null;
 
-    if(strategy.getClass() == AStarPathingStrategy.class) {
-        points = strategy.computePath(this.getPosition(), destPos, (p) -> !world.isOccupied(p) && world.withinBounds(p), (p1, p2) -> p1.adjacent(p2) && world.withinBounds(p1) && world.withinBounds(p2), PathingStrategy.CARDINAL_NEIGHBORS);
-        if (points.isEmpty()) {
-            newPos = this.getPosition();
-            return newPos;
-        }
-        newPos = new Point(points.get(1).getX(), points.get(1).getY());
+    points = strategy.computePath(this.getPosition(), destPos, (p) -> !world.isOccupied(p) && world.withinBounds(p), (p1, p2) -> p1.adjacent(p2) && world.withinBounds(p1) && world.withinBounds(p2), PathingStrategy.CARDINAL_NEIGHBORS);
+    if (points.isEmpty()) {
+        newPos = this.getPosition();
         return newPos;
     }
-    else
-    {
-        points = strategy.computePath(this.getPosition(), destPos, (p) -> !world.isOccupied(p) && world.withinBounds(p), (p1, p2) -> p1.adjacent(p2) && world.withinBounds(p1) && world.withinBounds(p2), PathingStrategy.CARDINAL_NEIGHBORS);
-        if (points.isEmpty()) {
-            newPos = this.getPosition();
-            return newPos;
-        }
-        newPos = new Point(points.get(0).getX(), points.get(0).getY());
-        return newPos;
-    }
-    }
+    newPos = new Point(points.get(1).getX(), points.get(1).getY());
+    return newPos;
+}
 
 
     public  boolean moveToEntity(
