@@ -97,6 +97,13 @@ public final class VirtualWorld extends PApplet
 
         }
 
+        //Adding entity monster
+
+        //Adding entity knight
+        Animator entity = new Knight("knight", pressed,this.imageStore.getImageList("knight"), 500,51);
+        this.world.addEntity(entity);
+        entity.scheduleActions(this.scheduler, this.world,this.imageStore);
+
     }
 
     private Point mouseToPoint(int x, int y)

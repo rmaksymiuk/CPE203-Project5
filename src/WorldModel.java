@@ -137,6 +137,7 @@ public final class WorldModel
                     return Functions.parseTree(properties,this, imageStore);
                 case Functions.SAPLING_KEY:
                     return Functions.parseSapling(properties,this, imageStore);
+
             }
         }
 

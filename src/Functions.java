@@ -119,7 +119,7 @@ public final class Functions
             world.tryAddEntity(entity);
         }
 
-        return properties.length == SAPLING_NUM_PROPERTIES;
+        return false;
     }
 
     public static boolean parseDude(
@@ -203,6 +203,23 @@ public final class Functions
 
         return properties.length == HOUSE_NUM_PROPERTIES;
     }
+/*
+    public static boolean parseKnight(
+            String[] properties, WorldModel world, ImageStore imageStore)
+    {
+        if (properties.length == KNIGHT_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(properties[KNIGHT_COL]),
+                    Integer.parseInt(properties[KNIGHT_ROW]));
+            Entity entity = createKnight(properties[KNIGHT_ID],
+                    pt,
+                    Integer.parseInt(properties[KNIGHT_ACTION_PERIOD]),
+                    Integer.parseInt(properties[KNIGHT_ANIMATION_PERIOD]),
+                    imageStore.getImageList(KNIGHT_KEY));
+            world.tryAddEntity(entity);
+        }
+
+        return properties.length == KNIGHT_NUM_PROPERTIES;
+    }*/
 
     public static int clamp(int value, int low, int high) {
         return Math.min(high, Math.max(value, low));
@@ -283,6 +300,17 @@ public final class Functions
             int resourceLimit,
             List<PImage> images) {
         return new DudeFull(id, position, images, resourceLimit,
+                actionPeriod, animationPeriod);
+    }
+
+    public static Knight createKnight(
+            String id,
+            Point position,
+            int actionPeriod,
+            int animationPeriod,
+            List<PImage> images)
+    {
+        return new Knight(id, position, images,
                 actionPeriod, animationPeriod);
     }
 }
