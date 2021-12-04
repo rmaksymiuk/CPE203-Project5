@@ -97,9 +97,17 @@ public final class VirtualWorld extends PApplet
 
         }
 
+        this.world.setBackgroundCell(new Point(pressed.getX()+1,pressed.getY()), new Background("cobble", this.imageStore.getImageList("cobble")));
+        this.world.setBackgroundCell(new Point(pressed.getX()-1,pressed.getY()), new Background("cobble", this.imageStore.getImageList("cobble")));
+        this.world.setBackgroundCell(new Point(pressed.getX(),pressed.getY()+1), new Background("cobble", this.imageStore.getImageList("cobble")));
+        this.world.setBackgroundCell(new Point(pressed.getX(),pressed.getY()-1), new Background("cobble", this.imageStore.getImageList("cobble")));
         this.world.setBackgroundCell(pressed, new Background("cobble", this.imageStore.getImageList("cobble")));
-
-
+        this.world.setBackgroundCell(new Point(pressed.getX()+1,pressed.getY()+1), new Background("cobble", this.imageStore.getImageList("cobble")));
+        this.world.setBackgroundCell(new Point(pressed.getX()-1,pressed.getY()-1), new Background("cobble", this.imageStore.getImageList("cobble")));
+        this.world.setBackgroundCell(new Point(pressed.getX()-1,pressed.getY()+1), new Background("cobble", this.imageStore.getImageList("cobble")));
+        this.world.setBackgroundCell(new Point(pressed.getX()+1,pressed.getY()-1), new Background("cobble", this.imageStore.getImageList("cobble")));
+        this.world.addEntity(new Castle("castle", pressed,this.imageStore.getImageList("castle")));
+        this.world.addEntity(new Fence("fence", new Point(pressed.getX()+1, pressed.getY()+1), this.imageStore.getImageList("fence")));
     }
 
     private Point mouseToPoint(int x, int y)
