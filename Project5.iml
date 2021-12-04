@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../project-2-rmaksymiuk/lib/processing-experimental.jar!/" />
+          <root url="jar://$MODULE_DIR$/../project-1-rmaksymiuk/lib/processing-experimental (1).jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
