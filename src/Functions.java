@@ -58,6 +58,15 @@ public final class Functions
     public static final int HOUSE_COL = 2;
     public static final int HOUSE_ROW = 3;
 
+    public static final String CASTLE_KEY = "castle";
+    public static final int CASTLE_NUM_PROPERTIES = 2;
+    public static final int CASTLE_ID = 1;
+    public static final int CASTLE_COL = 2;
+    public static final int CASTLE_ROW = 3;
+
+    public static final String FENCE_KEY = "fence";
+    public static final int FENCE_NUM_PROPERTIES = 2;
+
     public static final String FAIRY_KEY = "fairy";
     public static final int FAIRY_NUM_PROPERTIES = 6;
     public static final int FAIRY_ID = 1;

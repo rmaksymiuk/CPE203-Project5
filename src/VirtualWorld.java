@@ -97,6 +97,9 @@ public final class VirtualWorld extends PApplet
 
         }
 
+        this.world.setBackgroundCell(pressed, new Background("cobble", this.imageStore.getImageList("cobble")));
+
+
     }
 
     private Point mouseToPoint(int x, int y)
