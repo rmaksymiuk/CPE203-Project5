@@ -111,9 +111,10 @@ public final class VirtualWorld extends PApplet
         spawnPoints.add(new Point(pressed.getX() , pressed.getY() - 1));
         spawnPoints.add(new Point(pressed.getX() + 1, pressed.getY()));
         spawnPoints.add(new Point(pressed.getX() - 1, pressed.getY()));
+        spawnPoints.add(new Point(pressed.getX() + 2, pressed.getY()));
 
 
-        if(spawnPoints.stream().filter(point -> (!world.isOccupied(point)) && (world.withinBounds(point))).count() == 9) {
+        if(spawnPoints.stream().filter(point -> (!world.isOccupied(point)) && (world.withinBounds(point))).count() == 10) {
             createCobbleBackground(pressed, 1,0);
             createCobbleBackground(pressed, -1,0);
             createCobbleBackground(pressed, 0,1);
@@ -146,7 +147,7 @@ public final class VirtualWorld extends PApplet
             monster.scheduleActions(this.scheduler, this.world,this.imageStore);
         }
         else {
-            System.out.println("Invalid spawn area. Click on an unoccupied 3x3 tile area to spawn monster and knight.");
+            System.out.println("Invalid spawn area. Click on an unoccupied 3x3 tile area to spawn the castle and the knight plus an additional space for the monster.");
         }
 
     }
