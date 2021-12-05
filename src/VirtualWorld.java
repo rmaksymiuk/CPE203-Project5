@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Optional;
 
@@ -96,18 +98,67 @@ public final class VirtualWorld extends PApplet
             }
 
         }
+        //Background
 
-        this.world.setBackgroundCell(new Point(pressed.getX()+1,pressed.getY()), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(new Point(pressed.getX()-1,pressed.getY()), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(new Point(pressed.getX(),pressed.getY()+1), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(new Point(pressed.getX(),pressed.getY()-1), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(pressed, new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(new Point(pressed.getX()+1,pressed.getY()+1), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(new Point(pressed.getX()-1,pressed.getY()-1), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(new Point(pressed.getX()-1,pressed.getY()+1), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.setBackgroundCell(new Point(pressed.getX()+1,pressed.getY()-1), new Background("cobble", this.imageStore.getImageList("cobble")));
-        this.world.addEntity(new Castle("castle", pressed,this.imageStore.getImageList("castle")));
-        this.world.addEntity(new Fence("fence", new Point(pressed.getX()+1, pressed.getY()+1), this.imageStore.getImageList("fence")));
+
+        List<Point> spawnPoints = new ArrayList<>();
+        spawnPoints.add(pressed);
+        spawnPoints.add(new Point(pressed.getX() + 1, pressed.getY() + 1));
+        spawnPoints.add(new Point(pressed.getX() + 1, pressed.getY() - 1));
+        spawnPoints.add(new Point(pressed.getX() - 1, pressed.getY() + 1));
+        spawnPoints.add(new Point(pressed.getX() - 1, pressed.getY() - 1));
+        spawnPoints.add(new Point(pressed.getX() , pressed.getY() + 1));
+        spawnPoints.add(new Point(pressed.getX() , pressed.getY() - 1));
+        spawnPoints.add(new Point(pressed.getX() + 1, pressed.getY()));
+        spawnPoints.add(new Point(pressed.getX() - 1, pressed.getY()));
+
+
+        if(spawnPoints.stream().filter(point -> (!world.isOccupied(point)) && (world.withinBounds(point))).count() == 9) {
+            createCobbleBackground(pressed, 1,0);
+            createCobbleBackground(pressed, -1,0);
+            createCobbleBackground(pressed, 0,1);
+            createCobbleBackground(pressed, 0,-1);
+            createCobbleBackground(pressed, 0,0);
+            createCobbleBackground(pressed, 1,1);
+            createCobbleBackground(pressed, -1,-1);
+            createCobbleBackground(pressed, -1,1);
+            createCobbleBackground(pressed, 1,-1);
+
+            //Castle
+            this.world.addEntity(new Castle("castle", pressed,this.imageStore.getImageList("castle")));
+            //Fence
+            createFence(pressed, -1,1);
+            createFence(pressed, 1,1);
+            createFence(pressed, -1,-1);
+            createFence(pressed, 0,1);
+            createFence(pressed, 0,-1);
+            createFence(pressed, 1,0);
+            createFence(pressed, 1,-1);
+            createFence(pressed, -1,1);
+
+            //Knight
+            Animator knight = new Knight("knight", new Point(pressed.getX() -1, pressed.getY() ),this.imageStore.getImageList("knight"), 500,51);
+            this.world.addEntity(knight);
+            knight.scheduleActions(this.scheduler, this.world,this.imageStore);
+            //Monster
+            Animator monster = new Monster("monster", new Point(pressed.getX()+2, pressed.getY() ),this.imageStore.getImageList("monster"), 500,51);
+            this.world.addEntity(monster);
+            monster.scheduleActions(this.scheduler, this.world,this.imageStore);
+        }
+        else {
+            System.out.println("Invalid spawn area. Click on an unoccupied 3x3 tile area to spawn monster and knight.");
+        }
+
+    }
+
+    private void createCobbleBackground(Point pressed, int x, int y)
+    {
+        this.world.setBackgroundCell(new Point(pressed.getX()+x,pressed.getY() + y), new Background("cobble", this.imageStore.getImageList("cobble")));
+    }
+
+    private void createFence(Point pressed, int x, int y)
+    {
+        this.world.addEntity(new Fence("fence", new Point(pressed.getX()+x, pressed.getY()+y), this.imageStore.getImageList("fence")));
     }
 
     private Point mouseToPoint(int x, int y)

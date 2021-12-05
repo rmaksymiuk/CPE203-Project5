@@ -1,9 +1,7 @@
 import processing.core.PImage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DudeNotFull extends MoverEntity{
 
@@ -39,7 +37,20 @@ public class DudeNotFull extends MoverEntity{
         Tree treeType = new Tree(null,null,null,0,0,0);
         Sapling saplingType = new Sapling(null,null,null,0,0,0,0);
         Optional<Entity> target = this.getPosition().findNearest(world, new ArrayList<>(Arrays.asList(treeType,saplingType)));
-
+        Set<Entity> listOfFences= world.getEntities().stream().filter(p -> (p.getClass() == Fence.class)).collect(Collectors.toSet());
+        for (Entity f: listOfFences)
+        {
+            if(this.getPosition().proximity(f.getPosition()))
+            {
+                Point monsterPosition = this.getPosition();
+                world.removeEntity(this);
+                scheduler.unscheduleAllEvents(this);
+                Animator monster = new Monster("monster",monsterPosition,imageStore.getImageList("monster"), 500,51);
+                world.addEntity(monster);
+                monster.scheduleActions(scheduler, world,imageStore);
+                break;
+            }
+        }
         if (!target.isPresent() || !this.moveToEntity(world, target.get(),scheduler) || !this.transformNotFull(world, scheduler, imageStore)) {
             scheduler.scheduleEvent(this,
                     this.createActivityAction(world, imageStore),
@@ -54,6 +65,7 @@ public class DudeNotFull extends MoverEntity{
             EventScheduler scheduler)
     {
         PathingStrategy strategy = new SingleStepPathingStrategy();
+
         if (this.getPosition().adjacent(target.getPosition())) {
             //increase the resourseCount by 1
             this.setIncreaseResourceCount(1);

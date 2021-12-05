@@ -1,9 +1,7 @@
 import processing.core.PImage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DudeFull extends MoverEntity{
 
@@ -29,7 +27,20 @@ public class DudeFull extends MoverEntity{
             EventScheduler scheduler) {
         House houseType = new House(null, null ,null);
         Optional<Entity> fullTarget = this.getPosition().findNearest(world, new ArrayList<>(Arrays.asList(houseType)));
-
+        Set<Entity> listOfFences= world.getEntities().stream().filter(p -> (p.getClass() == Fence.class)).collect(Collectors.toSet());
+        for (Entity f: listOfFences)
+        {
+            if(this.getPosition().proximity(f.getPosition()))
+            {
+                Point monsterPosition = this.getPosition();
+                world.removeEntity(this);
+                scheduler.unscheduleAllEvents(this);
+                Animator monster = new Monster("monster",monsterPosition,imageStore.getImageList("monster"), 500,51);
+                world.addEntity(monster);
+                monster.scheduleActions(scheduler, world,imageStore);
+                break;
+            }
+        }
         if (fullTarget.isPresent() && this.moveToEntity(world, fullTarget.get(),scheduler)) {
             this.transformFull(world, scheduler, imageStore);
         } else {
@@ -46,6 +57,7 @@ public class DudeFull extends MoverEntity{
             EventScheduler scheduler)
     {
         PathingStrategy strategy = new SingleStepPathingStrategy();
+
         if (this.getPosition().adjacent(target.getPosition())) {
             return true;
         }
