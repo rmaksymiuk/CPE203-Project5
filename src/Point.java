@@ -45,8 +45,7 @@ public final class Point
     }
 
     public boolean proximity(Point p2) {
-        return (this.x == p2.x && Math.abs(this.y - p2.y) == 4) || (this.y == p2.y
-                && Math.abs(this.x - p2.x) == 4);
+        return (Math.abs(this.y - p2.y) <= 2) && (Math.abs(this.x - p2.x) <= 2);
     }
 
     public  boolean contains(Viewport viewport) {
