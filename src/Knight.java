@@ -24,7 +24,6 @@ public class Knight extends MoverEntity{
         Optional<Entity> fullTarget = this.getPosition().findNearest(world, new ArrayList<>(List.of(monsterType)));
         if (fullTarget.isPresent() && this.moveToEntity(world, fullTarget.get(),scheduler)) {
 
-
         } else {
             scheduler.scheduleEvent(this,
                     this.createActivityAction(world, imageStore),

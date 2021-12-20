@@ -46,8 +46,11 @@ public class AStarPathingStrategy implements PathingStrategy{
 
                 if(openList.contains(node))
                 {
-                    if(openList.removeIf(p -> p.getDistanceFromStart() >= node.getDistanceFromStart()))
+                    Predicate<WorldNode> closer = p -> p.getDistanceFromStart() >= node.getDistanceFromStart();
+                    Predicate<WorldNode> equalPoint = p -> p.equals(node);
+                    if(closer.test(node))
                     {
+                        openList.removeIf(equalPoint);
                         openList.add(node);
                     }
                 }
@@ -59,6 +62,7 @@ public class AStarPathingStrategy implements PathingStrategy{
             //remove current from the priority queue and add it to closed list
             WorldNode removedNode = openList.peek();
             current = removedNode;
+
             if(current != null && current.getPoint().adjacent(end) && withinReach.test(current.getPoint(), end))
             {
                 targetReached = true;

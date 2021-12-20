@@ -29,7 +29,6 @@ public class DudeNotFull extends MoverEntity{
 
 
 
-
     public void executeActorActivity(
             WorldModel world,
             ImageStore imageStore,
